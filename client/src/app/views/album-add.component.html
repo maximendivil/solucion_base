@@ -1,0 +1,35 @@
+<h1>{{titulo}}</h1>
+
+<div class="col-lg-6">
+    <div *ngIf="alertMessage">
+        <div class="alert alert-info">
+            {{alertMessage}}
+        </div>
+    </div>
+    <form #formAlbum="ngForm" (ngSubmit)="onSubmit()">
+        <p>
+            <label>Título</label>
+            <input class="form-control" type="text" #title="ngModel" name="title" [(ngModel)]="album.title" required>
+        </p>
+        <p>
+            <label>Descripción</label>
+            <input class="form-control" type="description" #title="ngModel" name="description" [(ngModel)]="album.description" required>
+        </p>
+        <p>
+            <label>Año</label>
+            <input class="form-control" type="number" #year="ngModel" name="year" [(ngModel)]="album.year" required>
+        </p>
+
+        <div *ngIf="is_edit">
+            <div class="album-image-for-edit" *ngIf="album.image && album.image != null">
+                <img src="{{ url + 'get-image-album/' + album.image }}" alt="">
+            </div>
+            <p>
+                <label>Sube la imagen del album</label>
+                <input type="file" name="" placeholder="Subir imagen" (change)="fileChangeEvent($event)">
+            </p>  
+        </div>
+    
+        <input type="submit" value="{{titulo}}" class="btn btn-success">
+    </form>
+</div>

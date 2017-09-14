@@ -1,0 +1,23 @@
+<h1 class="uk-heading-divider">{{ titulo }}</h1>
+<table class="uk-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{ user.name }}</td>
+            <td>{{ user.surname }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+                <a class="uk-button uk-button-primary" [routerLink]="['/mis-datos']">Editar</a>
+                <a class="uk-button uk-button-danger" href="#">Borrar</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
