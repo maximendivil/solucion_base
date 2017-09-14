@@ -97,6 +97,24 @@ function loginUser(req, res){
 	}); 
 }
 
+function getUsers(req, res){
+	User.find({}, (err, users) => {
+		if (err){
+			res.status(500).send({message: 'Error en la petición'});
+		}
+		else {
+			if (!users){
+				res.status(404).send({message: 'No hay usuarios'});
+			}
+			else {
+				return res.status(200).send({
+					users: users
+				});
+			}
+		}
+	});
+}
+
 function updateUser(req, res){
 	var userId = req.params.id;
 	var update = req.body;
@@ -169,6 +187,7 @@ function getImageFile(req, res){
 module.exports = {
 	saveUser,
 	loginUser,
+	getUsers,
 	updateUser,
 	uploadImage,
 	getImageFile

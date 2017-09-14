@@ -7,6 +7,7 @@ var multipart = require('connect-multiparty');
 var md_upload = multipart({ uploadDir: './uploads/users'});
 var UserController = require('../controllers/user');
 
+api.get('/users', UserController.getUsers);
 api.post('/register', UserController.saveUser);
 api.post('/login', UserController.loginUser);
 api.put('/update-user/:id', md_auth.ensureAuth, UserController.updateUser);
