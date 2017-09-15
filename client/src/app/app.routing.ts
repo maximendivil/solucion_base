@@ -1,6 +1,8 @@
+
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AppComponent } from './app.component';
 
 import { UserEditComponent } from './components/user-edit.component';
 import { UserListComponent } from './components/user-list.component';
@@ -19,7 +21,7 @@ import { AlbumDetailComponent } from './components/album-detail.component';
 import { SongAddComponent } from './components/song-add.component';
 import { SongEditComponent } from './components/song-edit.component';
 
-const appRoutes: Routes = [
+const appRoutes: Routes = [    
     {path: '', component: UserListComponent},
     {path: 'users', component: UserListComponent},
     {path: 'mis-datos', component: UserEditComponent},
@@ -31,7 +33,7 @@ const appRoutes: Routes = [
     {path: 'editar-album/:id', component: AlbumEditComponent},
     {path: 'album/:id', component: AlbumDetailComponent},
     {path: 'editar-artista/:id', component: ArtistEditComponent},
-    {path: 'artists/:page', component: ArtistListComponent},
+    {path: 'artists/:page', component: ArtistListComponent},    
     {path: '**', component: ArtistListComponent}    
 ]
 

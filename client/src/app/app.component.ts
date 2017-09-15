@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
     this.user = new User('','','','','','ROLE_USER','');
     this.user_register = new User('','','','','','ROLE_USER','');    
     this.url = GLOBAL.url;
+    this.errorMessage = '';
   }
 
   ngOnInit(){
@@ -80,7 +81,6 @@ export class AppComponent implements OnInit {
         if (errorMessage != null){
           var body = JSON.parse(error._body);
           this.errorMessage = body.message;
-          console.log(errorMessage);
         }
       }
     );
@@ -115,6 +115,7 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('token');
     this.identity = null;
     this.token = null;
+    this.errorMessage = '';
     this._router.navigate(['/']);
   }
 }

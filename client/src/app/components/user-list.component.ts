@@ -31,15 +31,21 @@ export class UserListComponent implements OnInit {
     
     ngOnInit() {
         console.log("UserListComponent cargado");
-        //Conseguir el listado de usuarios
-        this.getUsers();
+        if (this.identity){
+            //Conseguir el listado de usuarios
+            this.getUsers();
+        }
+        else {
+            this._router.navigate(['/']);
+        }
     }
 
     getUsers(){
         this._userService.getUsers(this.token).subscribe(
             response => {
                 if (!response.users){
-                    this._router.navigate(['/']);
+                    console.log("No hay usuarios");
+                    //this._router.navigate(['/']);
                 }
                 else {
                     this.users = response.users;
@@ -62,24 +68,4 @@ export class UserListComponent implements OnInit {
     onCancelArtist(){
         this.confirmado = null;
     }
-
-    /*onDeleteArtist(id){
-        this._artistService.deleteArtist(this.token, id).subscribe(
-            response => {
-                if (!response.artistRemoved){
-                    alert('Error en el servidor');
-                }
-                else {
-                    this.getArtists();
-                }
-            },
-            error => {
-                var errorMessage = <any>error;
-                if (errorMessage != null){
-                  var body = JSON.parse(error._body);
-                  console.log(errorMessage);
-                }
-            }
-        );
-    }*/
 }
