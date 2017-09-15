@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { UserService } from '../services/user.service';
+import { UserService } from './user.service';
 import { GLOBAL } from '../services/global';
 import { User } from '../models/user';
 
 @Component({
     selector: 'user-list',
-    templateUrl: '../views/user-list.component.html',
-    providers: [UserService]
+    templateUrl: './user-list.component.html',
+    //providers: [UserService]
 })
 export class UserListComponent implements OnInit {
     public titulo: string;
@@ -30,7 +30,7 @@ export class UserListComponent implements OnInit {
     }
     
     ngOnInit() {
-        console.log("UserListComponent cargado");
+        console.log("users/user-list.component.ts cargado");
         if (this.identity){
             //Conseguir el listado de usuarios
             this.getUsers();

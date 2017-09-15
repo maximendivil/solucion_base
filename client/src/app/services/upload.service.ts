@@ -3,7 +3,6 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map' ;
 import { Observable } from 'rxjs/observable';
 import { GLOBAL } from './global';
-import { Artist } from '../models/artist';
 
 @Injectable()
 export class UploadService {

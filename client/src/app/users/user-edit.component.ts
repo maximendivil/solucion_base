@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { UserService } from './user.service';
 import { User } from '../models/user';
 import { GLOBAL } from '../services/global';
 
 @Component({
     selector: 'user-edit',
-    templateUrl: '../views/user-edit.component.html',
+    templateUrl: './user-edit.component.html',
     providers: [UserService]
 })
 export class UserEditComponent implements OnInit {
