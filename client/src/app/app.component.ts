@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { User } from './models/user';
 import { UserService } from './users/user.service'; 
@@ -11,7 +12,7 @@ import { GLOBAL } from './services/global';
   providers: [UserService]
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnChanges {
   public title = 'MUSIFY';
   public user: User;
   public user_register: User;
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   public errorMessage;
   public alertRegister;
   public url;
+  public registerForm: FormGroup;
 
   constructor(
     private _userService: UserService,
@@ -35,7 +37,27 @@ export class AppComponent implements OnInit {
   ngOnInit(){
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
+    this.registerForm = new FormGroup({
+      'nombre': new FormControl(this.user.name, [
+        Validators.required
+      ]),
+      'apellido': new FormControl(this.user.surname, Validators.required),
+      'mail': new FormControl(this.user.email, Validators.required),
+      'pass': new FormControl(this.user.password, Validators.required)
+    });
   }
+
+  ngOnChanges(){
+    this.registerForm.reset();
+  }
+
+  get nombre() { return this.registerForm.get('nombre'); }
+
+  get apellido() { return this.registerForm.get('apellido'); }
+
+  get mail() { return this.registerForm.get('mail'); }
+
+  get pass() { return this.registerForm.get('pass'); }
 
   public onSubmit(): void {
     //Conseguir los datos del usuario identificado
@@ -87,6 +109,12 @@ export class AppComponent implements OnInit {
   }
 
   public onSubmitRegister(): void {
+    let userModel = this.registerForm.value;
+    this.user_register.name = userModel.nombre;
+    this.user_register.surname = userModel.apellido;
+    this.user_register.email = userModel.email;
+    this.user_register.password = userModel.password;
+
     this._userService.register(this.user_register).subscribe(
       response => {
         let user = response.user;
@@ -98,6 +126,7 @@ export class AppComponent implements OnInit {
         else {
           this.alertRegister = "Se registró al usuario correctamnete";
           this.user_register = new User('','','','','','ROLE_USER','');
+          this.ngOnChanges();
         }
       },
       error => {

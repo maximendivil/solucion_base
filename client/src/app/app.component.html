@@ -28,59 +28,80 @@
 
 <div *ngIf="!identity" class="uk-grid">
 	<div class="uk-width-1-2@m uk-width-1-1@s">
-		<div class="uk-width-3-4">
-			<h1>Identificate</h1>
-			<div *ngIf="errorMessage">
-				<div class="uk-alert-primary" uk-alert>
-					<a class="uk-alert-close" uk-close></a>
-					<p>{{ errorMessage }}</p>
-				</div>
+		<div class="uk-card uk-card-default uk-width-9-10">
+			<div class="uk-card-header">
+				<h1 class="uk-card-title">Identificate</h1>
 			</div>
-			<form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="uk-form-stacked">
-				<div class="uk-margin">
-					<label class="uk-form-label" for="form-stacked-text">Correo electrónico</label>
-					<div class="uk-form-controls">
-						<input class="uk-input" id="form-stacked-text" type="email" #email="ngModel" name="email" [(ngModel)]="user.email" required />
+			<div class="uk-card-body">
+				<div *ngIf="errorMessage">
+					<div class="uk-alert-primary" uk-alert>
+						<a class="uk-alert-close" uk-close></a>
+						<p>{{ errorMessage }}</p>
 					</div>
 				</div>
-				<div class="uk-margin">
-					<label class="uk-form-label" for="form-stacked-text">Password</label>
-					<div class="uk-form-controls">
-						<input class="uk-input" id="form-stacked-text" type="password" #password="ngModel" name="password" [(ngModel)]="user.password" required />
+				<form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="uk-form-stacked">
+					<div class="uk-margin">
+						<label class="uk-form-label" for="form-stacked-text">Correo electrónico</label>
+						<div class="uk-form-controls">
+							<input class="uk-input" id="form-stacked-text" type="email" #email="ngModel" name="email" [(ngModel)]="user.email" required />
+						</div>
 					</div>
-				</div>
-				<input type="submit" class="uk-button uk-button-primary" value="Entrar" />
-			</form>
+					<div class="uk-margin">
+						<label class="uk-form-label" for="form-stacked-text">Password</label>
+						<div class="uk-form-controls">
+							<input class="uk-input" id="form-stacked-text" type="password" #password="ngModel" name="password" [(ngModel)]="user.password" required />
+						</div>
+					</div>
+					<input type="submit" class="uk-button uk-button-primary" value="Entrar" />
+				</form>
+			</div>
 		</div>
 	</div>
 	<div class="uk-width-1-2@m uk-width-1-1@s">
-		<div class="uk-width-9-10">
-			<h1>Registrate</h1>
-			<div *ngIf="alertRegister">
-				<div class="uk-alert-success" uk-alert>
-					<a class="uk-alert-close" uk-close></a>
-					<p>{{ alertRegister }}</p>
+			<div class="uk-card uk-card-default uk-width-9-10">
+				<div class="uk-card-header">
+					<h1 class="uk-card-title">Registrate</h1>
+				</div>
+				<div class="uk-card-body">
+					<div *ngIf="alertRegister">
+						<div class="uk-alert-success" uk-alert>
+							<a class="uk-alert-close" uk-close></a>
+							<p>{{ alertRegister }}</p>
+						</div>
+					</div>
+					<form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()" class="uk-form-stacked" novalidate>
+						<div class="uk-margin">
+							<label class="uk-form-label" for="">Nombre</label>
+							<input type="text" formControlName="nombre" class="uk-input" required [class.uk-form-danger]="nombre.invalid && (nombre.dirty || nombre.touched)" />					
+							<div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="uk-alert-danger" uk-alert>
+								<p *ngIf="nombre.errors.required">El nombre es requerido.</p>
+							</div>
+						</div>
+						<div class="uk-margin">
+							<label class="uk-form-label" for="">Apellido</label>
+							<input type="text" formControlName="apellido" class="uk-input" required [class.uk-form-danger]="apellido.invalid && (apellido.dirty || apellido.touched)" />
+							<div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)" class="uk-alert-danger" uk-alert>
+								<p *ngIf="apellido.errors.required">El apellido es requerido.</p>
+							</div>
+						</div>
+						<div class="uk-margin">
+							<label class="uk-form-label" for="">Correo electrónico</label>
+							<input type="email" formControlName="mail" class="uk-input" email required [class.uk-form-danger]="mail.invalid && (mail.dirty || mail.touched)" />
+							<div *ngIf="mail.invalid && (mail.dirty || mail.touched)" class="uk-alert-danger" uk-alert>
+								<p *ngIf="mail.errors.required">El email es requerido.</p>
+								<p *ngIf="mail.errors.email">El email es inválido.</p>
+							</div>
+						</div>
+						<div class="uk-margin">
+							<label class="uk-form-label" for="">Contraseña</label>
+							<input type="password" formControlName="pass" class="uk-input" required [class.uk-form-danger]="pass.invalid && (pass.dirty || pass.touched)" />
+							<div *ngIf="pass.invalid && (pass.dirty || pass.touched)" class="uk-alert-danger" uk-alert>
+								<p *ngIf="pass.errors.required">La password es requerida.</p>
+							</div>
+						</div>
+						<input type="submit" class="uk-button uk-button-primary" value="Registrar" [disabled]="registerForm.pristine"/>
+					</form>
 				</div>
 			</div>
-			<form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="uk-form-stacked">
-				<div class="uk-margin">
-					<label class="uk-form-label" for="">Nombre</label>
-					<input type="text" #nombre="ngModel" name="nombre" [(ngModel)]="user_register.name" class="uk-input" required />
-				</div>
-				<div class="uk-margin">
-					<label class="uk-form-label" for="">Apellido</label>
-					<input type="text" #apellido="ngModel" name="apellido" [(ngModel)]="user_register.surname" class="uk-input" required />
-				</div>
-				<div class="uk-margin">
-					<label class="uk-form-label" for="">Correo electrónico</label>
-					<input type="text" #email="ngModel" name="email" [(ngModel)]="user_register.email" class="uk-input" required />
-				</div>
-				<div class="uk-margin">
-					<label class="uk-form-label" for="">Contraseña</label>
-					<input type="password" #password="ngModel" name="password" [(ngModel)]="user_register.password" class="uk-input" required />
-				</div>
-				<input type="submit" class="uk-button uk-button-primary" value="Registrar" />
-			</form>
 		</div>
-	</div>
 </div>
